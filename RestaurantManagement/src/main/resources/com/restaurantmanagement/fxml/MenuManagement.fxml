@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.restaurantmanagement.app.controller.MenuController">
+    <Label text="Quản lý Thực đơn" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="menuTable">
+        <TableColumn text="ID Món" fx:id="menuItemIdColumn" />
+        <TableColumn text="Tên Món" fx:id="menuItemNameColumn" />
+        <TableColumn text="Giá" fx:id="priceColumn" />
+        <TableColumn text="Loại" fx:id="categoryColumn" />
+    </TableView>
+
+    <Button text="Thêm Món" onAction="#handleAddMenuItem" />
+    <Button text="Sửa Món" onAction="#handleEditMenuItem" />
+    <Button text="Xóa Món" onAction="#handleDeleteMenuItem" />
+</VBox>
