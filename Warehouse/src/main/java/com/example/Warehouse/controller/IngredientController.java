@@ -141,7 +141,7 @@ public class IngredientController {
         result.ifPresent(ingredient -> ingredientList.add(ingredient));
     }
 
-    // Sửa nguyên liệu
+
     @FXML
     private void handleEditIngredient(Ingredient ingredient) {
         if (ingredient == null) {
@@ -153,7 +153,6 @@ public class IngredientController {
         Optional<Ingredient> result = dialog.showAndWait();
 
         result.ifPresent(updated -> {
-            // Cập nhật danh sách hiển thị
             int index = ingredientList.indexOf(ingredient);
             ingredientList.set(index, updated);
 
@@ -181,38 +180,6 @@ public class IngredientController {
         });
     }
 
-
-
-
-    @FXML
-    private void handleDeleteIngredient() {
-        Ingredient selected = ingredientTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showAlert("Chọn một nguyên liệu để xóa.");
-            return;
-        }
-
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Bạn có chắc muốn xóa?", ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> result = confirm.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.YES) {
-            ingredientList.remove(selected);
-
-            // Xóa khỏi database
-            String sql = "DELETE FROM Ingredients WHERE IngredientID = ?";
-            try (Connection conn = DatabaseConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, selected.getId());
-                stmt.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
-
-
     // Xóa nguyên liệu
     @FXML
     private void handleDeleteIngredient(Ingredient selected) {
@@ -237,9 +204,6 @@ public class IngredientController {
             }
         }
     }
-
-
-
 
     // Thêm danh mục nguyên liệu
     @FXML
@@ -280,20 +244,23 @@ public class IngredientController {
     private void handleFilterByCategory() {
         String selectedCategory = categoryFilter.getValue();
 
-        if (selectedCategory == null || selectedCategory.equals("Tất cả")) {
-            ingredientTable.setItems(ingredientList); // Hiển thị toàn bộ nguyên liệu
-            return;
-        }
-
         ObservableList<Ingredient> filteredList = FXCollections.observableArrayList();
-        for (Ingredient ingredient : ingredientList) {
-            if (selectedCategory.equals(ingredient.getCategory())) { // Tránh lỗi NullPointerException
-                filteredList.add(ingredient);
+        if (selectedCategory == null || selectedCategory.equals("Tất cả")) {
+            filteredList = ingredientList;  // Hiển thị lại toàn bộ danh sách
+        } else {
+            for (Ingredient ingredient : ingredientList) {
+                if (selectedCategory.equals(ingredient.getCategory())) {
+                    filteredList.add(ingredient);
+                }
             }
         }
 
         ingredientTable.setItems(filteredList);
+
+        // Gọi lại phương thức thêm nút vào bảng sau khi thay đổi danh sách
+        addButtonToTable();
     }
+
 
 
     private void loadCategories() {
@@ -332,6 +299,7 @@ public class IngredientController {
                 stmt.setDouble(6, ingredient.getPricePerUnit());
 
                 stmt.addBatch();
+
             }
 
             int[] affectedRows = stmt.executeBatch();

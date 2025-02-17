@@ -25,17 +25,17 @@ public class IngredientForm {
     private final TextField priceField = new TextField();
     private final ComboBox<String> categoryBox = new ComboBox<>();
 
-    private final Map<String, Integer> categoryMap = new HashMap<>(); // Lưu (Tên danh mục -> ID)
+    private final Map<String, Integer> categoryMap = new HashMap<>();
 
     private Ingredient ingredient;
 
     public IngredientForm(Ingredient ingredient) {
         this.ingredient = ingredient;
 
-        // Load danh mục từ CSDL
+
         loadCategories();
 
-        if (ingredient != null) { // Nếu đang sửa, điền thông tin vào form
+        if (ingredient != null) {
             nameField.setText(ingredient.getName());
             unitField.setText(ingredient.getUnit());
             stockField.setText(String.valueOf(ingredient.getStock()));
@@ -60,7 +60,7 @@ public class IngredientForm {
                 String name = resultSet.getString("name");
 
                 categoryMap.put(name, categoryId);
-                categoryBox.getItems().add(name); // Hiển thị tên danh mục
+                categoryBox.getItems().add(name);
             }
 
         } catch (SQLException e) {
@@ -103,7 +103,7 @@ public class IngredientForm {
         Button saveButton = new Button("Lưu");
         saveButton.setOnAction(event -> {
             if (validateInput()) {
-                saveIngredient(); // Gọi phương thức lưu dữ liệu
+                saveIngredient();
                 dialogStage.close();
             }
         });

@@ -15,7 +15,7 @@ public class WarehouseApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("warehouse-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
 

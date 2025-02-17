@@ -12,10 +12,16 @@
         </VBox>
     </Tab>
 
-<!--    <Tab text="Đơn hàng">-->
-<!--        <VBox>-->
-<!--            <fx:include source="inventory.fxml"/>-->
-<!--        </VBox>-->
-<!--    </Tab>-->
+    <Tab text="Đơn hàng">
+        <VBox>
+            <fx:include source="inventory-view.fxml"/>
+        </VBox>
+    </Tab>
+
+    <Tab text="So sánh">
+        <VBox>
+            <fx:include source="log-view.fxml"/>
+        </VBox>
+    </Tab>
 
 </TabPane>
