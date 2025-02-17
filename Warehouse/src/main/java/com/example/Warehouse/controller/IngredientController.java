@@ -39,7 +39,7 @@ public class IngredientController {
     private void handleSearch() {
         String keyword = searchField.getText().trim().toLowerCase();
         if (keyword.isEmpty()) {
-            ingredientTable.setItems(ingredientList); // Hiển thị lại tất cả nếu không nhập gì
+            ingredientTable.setItems(ingredientList);
             return;
         }
 
@@ -63,6 +63,7 @@ public class IngredientController {
         minStockColumn.setCellValueFactory(cellData -> cellData.getValue().minStockProperty().asObject());
         priceColumn.setCellValueFactory(cellData -> cellData.getValue().pricePerUnitProperty().asObject());
 
+        searchField.setOnKeyReleased(event -> handleSearch());
         addButtonToTable();
 
         loadCategories();  // <--- Thêm dòng này để tải danh mục

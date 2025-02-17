@@ -47,6 +47,7 @@ public class InventoryController {
         logNoteColumn.setCellValueFactory(cellData -> cellData.getValue().noteProperty());
         logUnitColumn.setCellValueFactory(cellData -> cellData.getValue().unitProperty());
         logDateColumn.setCellValueFactory(cellData -> cellData.getValue().logDateProperty());
+
     }
 
     private void connectDB() {
@@ -240,7 +241,7 @@ public class InventoryController {
             }
 
             showAlert("Thành công", "Hủy nguyên liệu thành công!", Alert.AlertType.INFORMATION);
-            loadInventoryLog(); // Cập nhật bảng nhật ký kho
+            loadInventoryLog();
 
             // Xóa dữ liệu trong các trường nhập
             cancelIngredientComboBox.getSelectionModel().clearSelection();
